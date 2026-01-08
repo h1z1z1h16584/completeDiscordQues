@@ -178,7 +178,7 @@ function stopCompletingAll() {
     console.log("Stopped completing all quests.");
 }
 
-function completeQuest(quest) {
+function completeQuest(quest: QuestValue) {
     const isApp = typeof DiscordNative !== "undefined";
     if (!quest) {
         console.log("You don't have any uncompleted quests!");

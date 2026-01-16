@@ -134,12 +134,34 @@ export default definePlugin({
     }
 });
 
+function isQuestEligibleForFarming(quest: QuestValue): boolean {
+    const questConfig = quest.config.taskConfig || quest.config.taskConfigV2;
+    if (!Object.keys(questConfig.tasks).some(taskName => {
+        return (taskName === "WATCH_VIDEO" && settings.store.farmVideos
+            || taskName === "PLAY_ON_DESKTOP" && settings.store.farmPlayOnDesktop
+            || taskName === "STREAM_ON_DESKTOP" && settings.store.farmStreamOnDesktop
+            || taskName === "PLAY_ACTIVITY" && settings.store.farmPlayActivity);
+    })) return false;
+
+    const rewards = quest.config?.rewardsConfig?.rewards || [];
+    if (!Array.isArray(rewards) || rewards.length === 0) return false;
+    return rewards.some(reward => {
+        return (reward.type === 1 && settings.store.farmRewardCodes
+            || reward.type === 2 && settings.store.farmInGame
+            || reward.type === 3 && settings.store.farmCollectibles
+            || reward.type === 4 && settings.store.farmVirtualCurrency
+            || reward.type === 5 && settings.store.farmFractionalPremium);
+    });
+}
+
 function updateQuests() {
     availableQuests = [...QuestsStore.quests.values()];
     acceptableQuests = availableQuests.filter(x => x.userStatus?.enrolledAt == null && new Date(x.config.expiresAt).getTime() > Date.now()) || [];
     completableQuests = availableQuests.filter(x => x.userStatus?.enrolledAt && !x.userStatus?.completedAt && new Date(x.config.expiresAt).getTime() > Date.now()) || [];
     for (const quest of acceptableQuests) {
-        acceptQuest(quest);
+        if (isQuestEligibleForFarming(quest)) {
+            acceptQuest(quest);
+        }
     }
     for (const quest of completableQuests) {
         if (completingQuest.has(quest.id)) {

@@ -33,16 +33,16 @@ export default definePlugin({
     settings,
     patches: [
         {
-            find: ".winButtonsWithDivider]",
+            find: ".PlatformTypes.WEB",
             replacement: {
                 match: /(\((\i)\){)(let{leading)/,
                 replace: "$1$2?.trailing?.props?.children?.unshift($self.renderQuestButtonTopBar());$3"
             }
         },
         {
-            find: "#{intl::ACCOUNT_SPEAKING_WHILE_MUTED}",
+            find: "accountContainerRef:",
             replacement: {
-                match: /className:\i\.buttons,.+?children:\[/,
+                match: /className:\i\.Uo,style:\i,children:\[/,
                 replace: "$&$self.renderQuestButtonSettingsBar(),"
             }
         },
@@ -51,13 +51,6 @@ export default definePlugin({
             replacement: {
                 match: /(\i).createElement\("a",(\i)\)/,
                 replace: "$1.createElement(\"a\",$self.renderQuestButtonBadges($2))"
-            }
-        },
-        {
-            find: "location:\"GlobalDiscoverySidebar\"",
-            replacement: {
-                match: /(\(\i\){let{tab:(\i)}=.+?children:\i}\))(]}\))/,
-                replace: "$1,$self.renderQuestButtonBadges($2)$3"
             }
         },
         {
@@ -138,6 +131,7 @@ function isQuestEligibleForFarming(quest: QuestValue): boolean {
     const questConfig = quest.config.taskConfig || quest.config.taskConfigV2;
     if (!Object.keys(questConfig.tasks).some(taskName => {
         return (taskName === "WATCH_VIDEO" && settings.store.farmVideos
+            || taskName === "WATCH_VIDEO_ON_MOBILE" && settings.store.farmVideos
             || taskName === "PLAY_ON_DESKTOP" && settings.store.farmPlayOnDesktop
             || taskName === "STREAM_ON_DESKTOP" && settings.store.farmStreamOnDesktop
             || taskName === "PLAY_ACTIVITY" && settings.store.farmPlayActivity);

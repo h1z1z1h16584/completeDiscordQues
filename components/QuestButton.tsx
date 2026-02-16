@@ -14,9 +14,9 @@ import { QuestsStore } from "../stores";
 
 const QuestIcon = findByCodeLazy("\"M7.5 21.7a8.95");
 const { navigateToQuestHome } = findByPropsLazy("navigateToQuestHome");
-const TopBarButton = findComponentByCodeLazy("badgePosition");
+const TopBarButton = findComponentByCodeLazy("badgePosition", "icon");
 const SettingsBarButton = findComponentByCodeLazy("keyboardShortcut", "positionKey");
-const CountBadge = findComponentByCodeLazy("\"renderBadgeCount\"");
+const CountBadge = findComponentByCodeLazy("renderBadgeCount", "disableColor");
 
 function questsStatus() {
     const availableQuests = [...QuestsStore.quests.values()];

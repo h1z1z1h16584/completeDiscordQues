@@ -1,25 +1,128 @@
-> [!CAUTION]
-> As of April 7th 2026, Discord has expressed their intent to crack down on automating quest completion.
->
-> Some users have received the following system message:
->
-> <img width="836" height="272" alt="574947159-6b439f4b-4381-4524-8540-b6a4777a80d0" src="https://github.com/user-attachments/assets/db4c7641-dd57-412e-a625-f39a363f2138" />
->
-> There isn't much I can do to make the script undetected, so use it at your own risk, as you most likely WILL get flagged by doing so.
+# completeDiscordQuest
 
-# CompleteDiscordQuest for Vencord
+A Vencord plugin that automatically completes Discord quests in the background.
 
-This is a porting of the original BetterDiscord(BD) plugin [CompleteDiscordQuest](https://github.com/nicola02nb/BetterDiscord-Stuff/tree/main/Plugins/CompleteDiscordQuest).
+> **Note:** This plugin requires building Vencord from source. The official Vencord installer won't work with userplugins.
 
-A Vencord(VC) plugin that completes you multiple discord quests in background simultaneously.
+---
 
-## Credits:
+## Quick Install (Windows)
 
-This is a porting for BetterDiscord of a [snippet](https://gist.github.com/aamiaa/204cd9d42013ded9faf646fae7f89fbb) made by [aamiaa](https://github.com/aamiaa).
+### Prerequisites
+You need these installed first:
+- **Node.js v18+** - [Download](https://nodejs.org/) (LTS version recommended)
+- **Git** - [Download](https://git-scm.com/download/win)
+- **pnpm** - Run `npm install -g pnpm` after installing Node.js
 
-## Features:
+### First Time Setup
 
-- One-time consent prompt before automation starts
-- Auto enroll quests
-- Set which type of quest can be farmed
-- Set which type of reward can be farmed
+**Option A: Automated Install (Recommended)**
+
+1. **Clone Vencord** (if you haven't already):
+   ```powershell
+   cd $HOME\Documents
+   git clone https://github.com/Vendicated/Vencord.git
+   cd Vencord
+   pnpm install --frozen-lockfile
+   ```
+
+2. **Download completeDiscordQuest**:
+   - [Download the latest release](https://github.com/h1z1z1h16584/completeDiscordQuest/archive/refs/heads/main.zip)
+   - Extract the ZIP to a temporary location
+
+3. **Run the Installer**:
+   - Double-click **`Run Update.bat`**
+   - The script will:
+     - Find your Vencord installation
+     - Copy the plugin to `src/userplugins/completeDiscordQuest/`
+     - Build Vencord with the plugin
+     - Inject into Discord
+
+4. **Enable the Plugin**:
+   - Restart Discord completely (close from system tray)
+   - Go to **Settings → Vencord → Plugins**
+   - Search for **completeDiscordQuest** and enable it
+
+**Option B: Manual Install**
+
+```powershell
+# Clone Vencord (skip if you already have it)
+cd $HOME\Documents
+git clone https://github.com/Vendicated/Vencord.git
+cd Vencord
+pnpm install --frozen-lockfile
+
+# Add completeDiscordQuest plugin
+cd src\userplugins
+git clone https://github.com/h1z1z1h16584/completeDiscordQuest.git completeDiscordQuest
+
+# Build and inject
+cd ..\..
+pnpm build
+pnpm inject
+```
+
+---
+
+## Updating
+
+Navigate to your plugin folder and double-click **`Run Update.bat`**:
+```
+Documents\Vencord\src\userplugins\completeDiscordQuest\Run Update.bat
+```
+
+Or manually:
+```powershell
+cd $HOME\Documents\Vencord\src\userplugins\completeDiscordQuest
+git pull
+cd ..\..\..\
+pnpm build
+pnpm inject
+```
+
+Restart Discord after updating.
+
+---
+
+## Supported Quest Types
+
+| Quest Type | Browser | Desktop |
+|------------|---------|---------|
+| Video Quests | ✅ | ✅ |
+| Desktop Gameplay | ❌ | ✅ |
+| Stream Quests | ❌ | ✅* |
+| Activity Quests | ✅ | ✅ |
+
+*Stream quests require at least one other person in a voice channel.
+
+---
+
+## Troubleshooting
+
+**Plugin doesn't appear?**
+- Make sure you built from source: `pnpm build`
+- Restart Discord completely (close from system tray too)
+- The official Vencord installer doesn't support userplugins
+
+**Build errors?**
+- Ensure Node.js v18+ is installed: `node --version`
+- Ensure pnpm is installed: `pnpm --version`
+- Try `pnpm install --frozen-lockfile` before building
+
+**"pnpm: command not found"?**
+- Install pnpm: `npm install -g pnpm`
+- Restart your terminal after installing
+
+---
+
+## Uninstalling
+
+```powershell
+cd $HOME\Documents\Vencord
+rm -r src\userplugins\completeDiscordQuest
+pnpm build
+pnpm inject
+```
+
+Restart Discord after uninstalling.
+

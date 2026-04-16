@@ -61,10 +61,9 @@ Use this to automatically fetch the latest official bug fixes and features direc
 | :--- | :---: | :---: |
 | Video Quests | ✅ | ✅ |
 | Desktop Gameplay | ❌ | ✅ |
-| Stream Quests | ❌ | ✅* |
+| Stream Quests | ❌ | ✅ |
 | Activity Quests | ✅ | ✅ |
 
-*\*Stream quests require at least one other person in a voice channel.*
 
 ---
 

@@ -70,9 +70,6 @@ Use this to automatically fetch the latest official bug fixes and features direc
 
 ## Troubleshooting
 
-**"ParserError: Missing '=' operator"**
-- This usually happens if PowerShell misinterprets the Git syntax. Ensure you are using the latest version of `update-online.ps1` where the `"@{u}"` command is correctly quoted.
-
 **Discord doesn't close or restart?**
 - The script targets the standard `Discord.exe`. If you use **Discord Canary** or **PTB**, edit the `.ps1` files and change the `Stop-Process` name to match your version.
 
